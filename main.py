@@ -1,7 +1,7 @@
 import streamlit as st
 from langchain_helper import get_few_shot_db_chain
 
-st.title("AtliQ T Shirts: Retail Q&A Tool 👕")
+st.title("AskDB AI 🤖")
 
 # Force fresh chain (cache removed to apply new formatting)
 def get_chain():
