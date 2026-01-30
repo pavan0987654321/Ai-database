@@ -1,75 +1,114 @@
+🚀 AskDB AI — Natural Language SQL Retail Assistant
 
-# AtliQ Tees: Talk to a Database  
+AskDB AI is an AI-powered database question-answering application that converts natural language questions into SQL queries, executes them on a retail database, and returns clean, human-readable answers.
 
-This is an end to end LLM project based on Google Palm and Langchain. We are building a system that can talk to MySQL database. 
-User asks questions in a natural language and the system generates answers by converting those questions to an SQL query and
-then executing that query on MySQL database. 
-AtliQ Tees is a T-shirt store where they maintain their inventory, sales and discounts data in MySQL database. A store manager 
-will may ask questions such as,
-- How many white color Adidas t shirts do we have left in the stock?
-- How much sales our store will generate if we can sell all extra-small size t shirts after applying discounts?
-The system is intelligent enough to generate accurate queries for given question and execute them on MySQL database
+The system combines LangChain, LLMs, vector similarity search, and MySQL to enable business-style Q&A over structured data — without writing SQL manually.
 
-![](atliq_tees.png)
+🎯 Features
 
-## Project Highlights
+✅ Ask questions in plain English
 
-- AtliQ Tees is a t shirt store that sells Adidas, Nike, Van Heusen and Levi's t shirts 
-- Their inventory, sales and discounts data is stored in a MySQL database
-- We will build an LLM based question and answer system that will use following,
-  - Google Palm LLM
-  - Hugging face embeddings
-  - Streamlit for UI
-  - Langchain framework
-  - Chromadb as a vector store
-  - Few shot learning
-- In the UI, store manager will ask questions in a natural language and it will produce the answers
+✅ Automatic Natural Language → SQL conversion
+
+✅ Executes queries on MySQL retail database
+
+✅ Returns formatted business-friendly answers
+
+✅ Few-shot prompt learning for better SQL accuracy
+
+✅ Vector similarity example selection (FAISS)
+
+✅ Streamlit web interface
+
+✅ Secure environment variable based API keys
+
+✅ OpenRouter / LLM compatible backend
+
+🧠 Example Questions
+
+You can ask:
+
+How many white Nike t-shirts are in stock?
+
+Show stock available by size for Adidas black shirts
+
+What is the total inventory for Puma products?
+
+Which size has the highest stock?
+
+Give me discount details for shirt ID 10
+
+🏗️ Tech Stack
+
+Python
+
+LangChain
+
+LLM via OpenRouter
+
+FAISS Vector Store
+
+HuggingFace Embeddings
+
+MySQL
+
+Streamlit
+
+SQLAlchemy
+
+📂 Project Structure
+AskDB-AI/
+│
+├── database/
+│   ├── db_creation_atliq_t_shirts.sql
+│   └── db_setup.sql
+│
+├── few_shots.py
+├── langchain_helper.py
+├── main.py
+├── requirements.txt
+├── .env              # (not committed)
+├── .gitignore
+└── README.md
+
+⚙️ Setup Instructions
+1️⃣ Clone Repository
+git clone https://github.com/YOUR_USERNAME/AskDB-AI.git
+cd AskDB-AI
+
+2️⃣ Create Virtual Environment
+python -m venv venv
+venv\Scripts\activate
+
+3️⃣ Install Dependencies
+pip install -r requirements.txt
+
+4️⃣ Setup Environment Variables
+
+Create a .env file:
+
+OPENROUTER_API_KEY=your_api_key_here
+DB_USER=root
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_NAME=atliq_tshirts
 
 
-## Installation
+⚠️ Never commit .env to GitHub.
 
-1.Clone this repository to your local machine using:
+5️⃣ Setup Database
 
-```bash
-  git clone https://github.com/codebasics/langchain.git
-```
-2.Navigate to the project directory:
+Open MySQL Workbench and run:
 
-```bash
-  cd 4_sqldb_tshirts
-```
-3. Install the required dependencies using pip:
+database/db_creation_atliq_t_shirts.sql
 
-```bash
-  pip install -r requirements.txt
-```
-4.Acquire an api key through makersuite.google.com and put it in .env file
 
-```bash
-  GOOGLE_API_KEY="your_api_key_here"
-```
-5. For database setup, run database/db_creation_atliq_t_shirts.sql in your MySQL workbench
+This will create tables and sample data.
 
-## Usage
-
-1. Run the Streamlit app by executing:
-```bash
+▶️ Run Application
 streamlit run main.py
 
-```
 
-2.The web app will open in your browser where you can ask questions
+Open browser:
 
-## Sample Questions
-  - How many total t shirts are left in total in stock?
-  - How many t-shirts do we have left for Nike in XS size and white color?
-  - How much is the total price of the inventory for all S-size t-shirts?
-  - How much sales amount will be generated if we sell all small size adidas shirts today after discounts?
-  
-## Project Structure
-
-- main.py: The main Streamlit application script.
-- langchain_helper.py: This has all the langchain code
-- requirements.txt: A list of required Python packages for the project.
-- few_shots.py: Contains few shot prompts
-- .env: Configuration file for storing your Google API key.
+http://localhost:8501
