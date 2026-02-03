@@ -22,9 +22,9 @@ def get_few_shot_db_chain():
     db = SQLDatabase.from_uri(f"mysql+pymysql://{db_user}:{encoded_password}@{db_host}/{db_name}", sample_rows_in_table_info=3)
     
     llm = ChatOpenAI(
-        model="openai/gpt-4o-mini",
-        api_key=os.getenv("OPENROUTER_API_KEY"),
-        base_url="https://openrouter.ai/api/v1",
+        model="llama-3.3-70b-versatile",
+        api_key=os.getenv("GROQ_API_KEY"),
+        base_url="https://api.groq.com/openai/v1",
         temperature=0.2
     )
 
