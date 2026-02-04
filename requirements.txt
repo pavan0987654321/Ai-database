@@ -9,3 +9,4 @@ pymysql
 sentence-transformers
 langchain-openai
 faiss-cpu
+gunicorn

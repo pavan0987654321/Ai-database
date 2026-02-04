@@ -1,0 +1,44 @@
+services:
+  # Backend API Service
+  - type: web
+    name: askdb-api
+    runtime: python
+    region: singapore # Optional: specific region
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn api_server:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+
+  # Frontend Static Site
+  - type: static
+    name: askdb-dashboard
+    runtime: static
+    buildCommand: cd askdb-dashboard && npm install && npm run build
+    staticPublishPath: askdb-dashboard/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: askdb-api
+          property: url
+        # Use value transformation to append /api
+        # Note: Render doesn't support value transformation in yaml nicely for this yet, 
+        # so code needs to handle base URL or we append via build script.
+        # But api.js handles 'http.../api'. 
+        # If Render gives https://api.com, we need https://api.com/api
+        # We will advise user to check this assignment.
