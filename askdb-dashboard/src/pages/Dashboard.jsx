@@ -442,7 +442,7 @@ export default function Dashboard() {
                              press-effect"
                             >
                                 <div className="flex items-center gap-2">
-                                    <Download size={12} className="text-[var(--text-tertiary)]" />
+                                    <Download size={12} className="text-[var(--text-secondary)]" />
                                     <div>
                                         <p className="text-[12px] text-[var(--text-primary)]">Export Results</p>
                                         <p className="text-[10px] text-[var(--text-tertiary)]">Download CSV</p>
@@ -460,7 +460,7 @@ export default function Dashboard() {
                              press-effect"
                             >
                                 <div className="flex items-center gap-2">
-                                    <Star size={12} className="text-[var(--text-tertiary)]" />
+                                    <Star size={12} className="text-[var(--text-secondary)]" />
                                     <div>
                                         <p className="text-[12px] text-[var(--text-primary)]">Save Query</p>
                                         <p className="text-[10px] text-[var(--text-tertiary)]">Add to favorites</p>

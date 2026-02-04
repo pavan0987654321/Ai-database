@@ -69,9 +69,9 @@ export default function RecentQueries({ queries = [], loading = false, onRerun }
                     {/* Status Icon & Rerun Button */}
                     <div className="flex items-center gap-1">
                         {item.status === 'success' ? (
-                            <CheckCircle size={12} className="text-[var(--success-muted)] opacity-60" />
+                            <CheckCircle size={12} className="text-[var(--success-muted)]" />
                         ) : (
-                            <XCircle size={12} className="text-[var(--error-muted)] opacity-60" />
+                            <XCircle size={12} className="text-[var(--error-muted)]" />
                         )}
                         <button
                             onClick={(e) => {

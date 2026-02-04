@@ -8,10 +8,10 @@ export default function MetricCard({ title, value, change, changeType = 'increas
                     transition-all duration-200 ease-out
                     hover:shadow-[var(--shadow-md)] hover:-translate-y-0.5
                     animate-fadeInUp relative overflow-hidden">
-            {/* Ghost Icon - More faded */}
+            {/* Ghost Icon - More visible watermark */}
             {Icon && (
-                <div className="absolute top-5 right-5 opacity-[0.03]">
-                    <Icon size={48} strokeWidth={0.8} />
+                <div className="absolute top-5 right-5 opacity-[0.15] text-[var(--accent)]">
+                    <Icon size={48} strokeWidth={1.5} />
                 </div>
             )}
 
