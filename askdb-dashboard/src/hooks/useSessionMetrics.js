@@ -7,29 +7,31 @@ const STORAGE_KEY = 'queryflow_session_metrics';
  * Provides honest, demo-appropriate analytics
  */
 export default function useSessionMetrics() {
-    const [metrics, setMetrics] = useState({
-        totalQueries: 0,
-        successfulQueries: 0,
-        queryTimes: [],
-    });
-
-    // Load metrics from localStorage on mount
-    useEffect(() => {
+    // Initialize metrics lazily from sessionStorage
+    const [metrics, setMetrics] = useState(() => {
         try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                setMetrics(parsed);
-            }
+            const stored = sessionStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : {
+                totalQueries: 0,
+                successfulQueries: 0,
+                queryTimes: [],
+            };
         } catch (error) {
             console.warn('Failed to load session metrics:', error);
+            return {
+                totalQueries: 0,
+                successfulQueries: 0,
+                queryTimes: [],
+            };
         }
-    }, []);
+    });
 
-    // Save metrics to localStorage whenever they change
+    // Save metrics to sessionStorage whenever they change
     useEffect(() => {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(metrics));
+            if (metrics.totalQueries > 0 || sessionStorage.getItem(STORAGE_KEY)) {
+                sessionStorage.setItem(STORAGE_KEY, JSON.stringify(metrics));
+            }
         } catch (error) {
             console.warn('Failed to save session metrics:', error);
         }
@@ -58,7 +60,7 @@ export default function useSessionMetrics() {
             successfulQueries: 0,
             queryTimes: [],
         });
-        localStorage.removeItem(STORAGE_KEY);
+        sessionStorage.removeItem(STORAGE_KEY);
     }, []);
 
     return {

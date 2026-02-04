@@ -35,6 +35,8 @@ export default function Settings() {
     const [toast, setToast] = useState(null);
     const [hasChanges, setHasChanges] = useState(false);
 
+    const [showSuccess, setShowSuccess] = useState(false);
+
     // Detect changes
     useEffect(() => {
         const changed =
@@ -42,6 +44,7 @@ export default function Settings() {
             email !== settings.email ||
             notifications !== settings.notifications;
         setHasChanges(changed);
+        if (changed) setShowSuccess(false); // Reset success state when user types
     }, [displayName, email, notifications, settings]);
 
     // Show toast notification
@@ -66,11 +69,15 @@ export default function Settings() {
             setSettings(newSettings);
             setIsSaving(false);
             setHasChanges(false);
+            setShowSuccess(true); // Show success state
             showToast('Settings saved successfully');
+
+            // Reset success message after 2 seconds
+            setTimeout(() => setShowSuccess(false), 2000);
 
             // Dispatch custom event to update Avatar
             window.dispatchEvent(new Event('settingsUpdated'));
-        }, 500);
+        }, 800);
     };
 
     return (
@@ -89,21 +96,23 @@ export default function Settings() {
                     size="sm"
                     onClick={handleSaveChanges}
                     disabled={!hasChanges || isSaving}
+                    variant={showSuccess ? "outline" : "primary"}
+                    className={showSuccess ? "border-green-500/50 text-green-500 hover:text-green-600 hover:border-green-500" : ""}
                 >
                     {isSaving ? (
                         <>
                             <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                             Saving...
                         </>
-                    ) : hasChanges ? (
+                    ) : showSuccess ? (
                         <>
-                            <Save size={14} />
-                            Save Changes
+                            <Check size={14} />
+                            Saved!
                         </>
                     ) : (
                         <>
-                            <Check size={14} />
-                            Saved
+                            <Save size={14} />
+                            Save Changes
                         </>
                     )}
                 </Button>

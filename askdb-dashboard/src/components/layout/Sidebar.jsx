@@ -16,7 +16,7 @@ const navItems = [
     { path: '/settings', icon: Settings, label: 'Settings' },
 ];
 
-export default function Sidebar({ collapsed, onToggle }) {
+export default function Sidebar({ collapsed, onToggle, onOpenHelp }) {
     return (
         <aside
             className={`
@@ -50,6 +50,7 @@ export default function Sidebar({ collapsed, onToggle }) {
 
             <div className="px-2 py-4 border-t border-[var(--border-subtle)] space-y-1">
                 <button
+                    onClick={onOpenHelp}
                     className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl
                      text-[12px] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]
                      hover:bg-[var(--bg-card)]/60 transition-all duration-200

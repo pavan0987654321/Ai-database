@@ -7,25 +7,23 @@ const MAX_HISTORY = 100; // Keep last 100 queries
  * Custom hook for managing query history
  */
 export default function useQueryHistory() {
-    const [history, setHistory] = useState([]);
-
-    // Load history from localStorage on mount
-    useEffect(() => {
+    // Initialize history lazily from localStorage to avoid race conditions
+    const [history, setHistory] = useState(() => {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                setHistory(parsed);
-            }
+            return stored ? JSON.parse(stored) : [];
         } catch (error) {
             console.warn('Failed to load query history:', error);
+            return [];
         }
-    }, []);
+    });
 
     // Save history to localStorage whenever it changes
     useEffect(() => {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+            if (history.length > 0 || localStorage.getItem(STORAGE_KEY)) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+            }
         } catch (error) {
             console.warn('Failed to save query history:', error);
         }
