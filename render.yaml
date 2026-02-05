@@ -5,7 +5,7 @@ services:
     runtime: python
     region: singapore # Optional: specific region
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn api_server:app --bind 0.0.0.0:${PORT}
+    startCommand: gunicorn api_server:app
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
