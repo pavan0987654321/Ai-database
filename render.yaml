@@ -4,8 +4,8 @@ services:
     name: askdb-api
     runtime: python
     region: singapore # Optional: specific region
-    buildCommand: bash build.sh
-    startCommand: gunicorn test_wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile -
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -c gunicorn_config.py wsgi:app
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
