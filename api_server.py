@@ -22,7 +22,7 @@ except ImportError:
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for React frontend
+CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS for all domains
 
 # Database configuration
 DB_CONFIG = {
