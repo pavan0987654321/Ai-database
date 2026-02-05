@@ -309,11 +309,14 @@ def get_recent_queries():
 # ============================================================================
 
 if __name__ == '__main__':
+    # Get port from environment variable (required by Render)
+    port = int(os.getenv('PORT', 8000))
+    
     print("=" * 60)
     print("🚀 AskDB AI - Backend API Server (SQL Execution Only)")
     print("=" * 60)
     print(f"📊 Database: {DB_CONFIG['database']}")
-    print(f"🌐 API URL: http://localhost:8000")
+    print(f"🌐 API URL: http://0.0.0.0:{port}")
     print(f"📝 Endpoints:")
     print(f"   - POST /api/execute-sql (Direct SQL execution)")
     print(f"   - GET  /api/database/tables")
@@ -321,4 +324,4 @@ if __name__ == '__main__':
     print("=" * 60)
     print("✅ Server is ready! You can now use the Query Builder.")
     print("=" * 60)
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)

@@ -10,3 +10,6 @@ sentence-transformers
 langchain-openai
 faiss-cpu
 gunicorn
+requests
+flask
+flask-cors
