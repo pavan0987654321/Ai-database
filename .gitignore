@@ -1,32 +1,15 @@
-# Python virtual environment
-venv/
-env/
-ENV/
-
-# Environment variables and secrets
-.env
-.env.*
-secret_key.py
-
-# Python cache
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Logs
-*.log
-
-# Jupyter Notebook
-.ipynb_checkpoints/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
+*.py[cod]
+*$py.class
+*.so
+.env
 .DS_Store
-Thumbs.db
-
-# Streamlit
-.streamlit/
+node_modules/
+dist/
+build/
+*.exe
+ngrok
+# Exclude scripts with secrets
+upload_to_aiven.py
+create_users_table.py
+verify_aiven.py

@@ -229,6 +229,38 @@ Generate ONLY a valid MySQL SELECT query. Do not include any explanation, just t
         traceback.print_exc()
         return jsonify({'error': f'AI processing failed: {str(e)}'}), 500
 
+@app.route('/api/sync-user', methods=['POST'])
+def sync_user():
+    """Sync user from Clerk to Local DB"""
+    data = request.json
+    user_id = data.get('user_id')
+    email = data.get('email')
+    full_name = data.get('full_name')
+
+    if not user_id:
+        return jsonify({"error": "Missing user_id"}), 400
+
+    query = """
+        INSERT INTO users (user_id, email, full_name)
+        VALUES (%s, %s, %s)
+        ON DUPLICATE KEY UPDATE
+        email = VALUES(email),
+        full_name = VALUES(full_name)
+    """
+
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(query, (user_id, email, full_name))
+        connection.commit()
+        print(f"👤 Synced User: {email}")
+        return jsonify({"status": "synced"}), 200
+    except Exception as e:
+        print(f"❌ User Sync Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        connection.close()
+
 # ----------------------------------------------------------------------------
 # Database Info
 # ----------------------------------------------------------------------------

@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
+import { getApiUrl } from '../../services/api';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import HelpModal from '../ui/HelpModal';
@@ -7,6 +9,22 @@ import HelpModal from '../ui/HelpModal';
 export default function Layout() {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [isHelpOpen, setIsHelpOpen] = useState(false);
+    const { user, isLoaded } = useUser();
+
+    // Sync User to Database
+    useEffect(() => {
+        if (isLoaded && user) {
+            fetch(`${getApiUrl()}/sync-user`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: user.id,
+                    email: user.primaryEmailAddress?.emailAddress,
+                    full_name: user.fullName
+                })
+            }).catch(console.error);
+        }
+    }, [isLoaded, user]);
 
     return (
         <div className="min-h-screen bg-[var(--bg-base)] transition-theme">
