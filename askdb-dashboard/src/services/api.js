@@ -1,5 +1,5 @@
 // API Configuration
-const getBaseUrl = () => {
+export const getApiUrl = () => {
     let url = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
     // Remove trailing slash if present
     if (url.endsWith('/')) url = url.slice(0, -1);
@@ -7,7 +7,7 @@ const getBaseUrl = () => {
     if (!url.endsWith('/api')) url += '/api';
     return url;
 };
-const API_BASE_URL = getBaseUrl();
+const API_BASE_URL = getApiUrl();
 const API_KEY = import.meta.env.VITE_API_KEY || '';
 
 // Track API availability
