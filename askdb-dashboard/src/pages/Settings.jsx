@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User, Shield, Bell, Palette, Save, Check } from 'lucide-react';
+import { useUser } from '@clerk/clerk-react';
 import GlassCard from '../components/ui/GlassCard';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -9,27 +10,31 @@ const SETTINGS_STORAGE_KEY = 'queryflow_user_settings';
 
 export default function Settings() {
     const { theme, toggleTheme } = useTheme();
+    const { user, isLoaded } = useUser();
 
-    // Load settings from localStorage
+    // Load settings from localStorage or use Clerk data
     const [settings, setSettings] = useState(() => {
         try {
             const stored = localStorage.getItem(SETTINGS_STORAGE_KEY);
             return stored ? JSON.parse(stored) : {
-                displayName: 'John Doe',
-                email: 'john@example.com',
                 notifications: true
             };
         } catch {
-            return {
-                displayName: 'John Doe',
-                email: 'john@example.com',
-                notifications: true
-            };
+            return { notifications: true };
         }
     });
 
-    const [displayName, setDisplayName] = useState(settings.displayName);
-    const [email, setEmail] = useState(settings.email);
+    const [displayName, setDisplayName] = useState('');
+    const [email, setEmail] = useState('');
+
+    // Sync with Clerk data once loaded
+    useEffect(() => {
+        if (isLoaded && user) {
+            setDisplayName(user.fullName || '');
+            setEmail(user.primaryEmailAddress?.emailAddress || '');
+        }
+    }, [isLoaded, user]);
+
     const [notifications, setNotifications] = useState(settings.notifications);
     const [isSaving, setIsSaving] = useState(false);
     const [toast, setToast] = useState(null);
